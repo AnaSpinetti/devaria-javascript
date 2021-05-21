@@ -1,0 +1,68 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Devaria API Aula 4 JS"
+    },
+    "host": "",
+    "basePath": "/api",
+    "tags": [
+      {
+        "name": "Usuário",
+        "description": "Operações com o módulo de usuários"
+      }
+    ],
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "paths": {
+      "/usuario": {
+        "get": {
+          "tags": ["Usuário"],
+          "summary": "Obter dados do usuário",
+          "description": "",
+          "parameters": [
+          ],
+          "responses": {
+            "200": {
+              "schema": { "$ref": "#/definitions/User Response Model" }
+            },
+            "401": {
+              "schema": { "$ref": "#/definitions/User Error Response Model" }
+            }
+          }
+        }
+      }
+    },
+    "definitions": {
+      "User Response Model": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "xxx"
+          },
+          "id": {
+            "type": "number",
+            "example": 1
+          }
+        }
+      },
+      "User Error Response Model": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
