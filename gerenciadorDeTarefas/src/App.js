@@ -2,57 +2,62 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger/swagger.json');
 const LoginController = require('./controllers/LoginController');
-const { BASE_API_URL } = require('./enum/AppConstants');
+const UsuarioController = require('./controllers/UsuarioController');
 const AppConstants = require('./enum/AppConstants');
+
+const logger = require('./middlewares/logger');
+const jwt = require('./middlewares/jwt');
 
 class App {
     #controllers;
-    
-    start(){
 
-        // Configurar o express
+    iniciar() {
+        // configurar o express
         this.#configurarExpress();
-        // Carregar os controllers
+        // carregar os controllers
         this.#carregarControllers();
-        // Iniciar o servidor
+        // iniciar o servidor
         this.#iniciarServidor();
     }
 
-    // Método privado que contém a configuração do express
     #configurarExpress = () => {
-        // Cria a instancia do express para gerenciar o servidor
+        // cria a instância do express para gerenciar o servidor
         this.express = express();
 
-        // Registra os middlewares para fazer a conversão das requisições da API
+        // registra o middleware para fazer log das requisições
+        this.express.use(logger);
+
+        // registra os middlewares para fazer a conversão das requisições da API
         this.express.use(express.urlencoded({ extended: true }));
         this.express.use(express.json());
 
-        // Configura o swagger da aplicação
-        this.express.use(`${AppConstants.BASE_API_URL}/docs`,
-        swaggerUi.serve,
-        swaggerUi.setup(swaggerFile)
-        );
+        // registra o middleware do jwt para fazer validação do acesso as rotas através das requisições recebidas
+        this.express.use(jwt);
 
-        this.express.use((req, res, next) => {
-            console.log("Requisição recebida, url=" + req.url, + "método http = "+ req.method);
-            next();
-        });
+        // configura o swagger da aplicação para servir a documentação
+        this.express.use(
+            `${AppConstants.BASE_API_URL}/docs`,
+            swaggerUi.serve,
+            swaggerUi.setup(swaggerFile)
+        );
     }
 
     #carregarControllers = () => {
-        // Atribui para a propriedade controllers a lista de controllers disponiveis na aplicação
+        // atribui para propriedade #controllers a lista de controllers disponiveis da aplicação
         this.#controllers = [
-            new LoginController(this.express)
+            new LoginController(this.express),
+            new UsuarioController(this.express)
         ];
     }
 
     #iniciarServidor = () => {
+        // tenta pegar a porta a partir da variavel de ambiente EXPRESS_PORT
+        // se não tiver definida, vai usar a porta padrão 3001
         const port = process.env.EXPRESS_PORT || 3001;
-        this.express.listen(port, () =>{
-            console.log("aplicação sendo executada na porta: " + port);
+        this.express.listen(port, () => {
+            console.log(`Aplicação executando na porta ${port}`);
         });
     }
-        
 }
 
 module.exports = App;
