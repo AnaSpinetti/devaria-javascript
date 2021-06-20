@@ -90,7 +90,7 @@
                 },
                 "nome": {
                     "type": "string",
-                    "example": "Fulano Da Silva"
+                    "example": "Usuario de teste"
                 },
                 "email": {
                     "type": "string",
@@ -107,7 +107,7 @@
             "properties": {
                 "nome": {
                     "type": "string",
-                    "example": "Fulano Da Silva"
+                    "example": "Usuario de teste"
                 },
                 "email": {
                     "type": "string",
@@ -124,7 +124,7 @@
             "properties": {
                 "nome": {
                     "type": "string",
-                    "example": "Fulano Da Silva"
+                    "example": "Usuario de teste"
                 },
                 "email": {
                     "type": "string",

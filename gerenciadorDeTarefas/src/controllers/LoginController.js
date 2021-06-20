@@ -5,9 +5,6 @@ class LoginController extends HttpController {
     // sobrescreve o método da classe HttpController
     configurarRotas(baseUrl) {
         // define a rota e o manipulador da classe login
-        // passando o método login como referência e informando
-        // que o contexto que deve ser usado é da próprio objeto da
-        // classe LoginController
         this.express.post(`${baseUrl}/login`, this.login.bind(this));
     }
 

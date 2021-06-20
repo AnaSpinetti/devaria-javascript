@@ -68,7 +68,7 @@ module.exports = (req, res, next) => {
             req.logger.error('erro ao decodificar o token jwt', `token=${token}`);
             return res.status(401).json({
                 status: 401,
-                erro: 'acesso negado, problema ao decodificar o seu token de autorização'
+                 erro: 'acesso negado, problema ao decodificar o seu token de autorização'
             });
         }
 
@@ -82,4 +82,4 @@ module.exports = (req, res, next) => {
         req.usuario = usuario;
         next();
     });
-}
+}  

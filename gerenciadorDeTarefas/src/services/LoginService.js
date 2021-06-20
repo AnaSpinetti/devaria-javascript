@@ -2,8 +2,7 @@ const jwt = require('jsonwebtoken');
 
 class LoginService {
     logar(login, senha) {
-        // TODO: verificar se o usuário esta cadastrado no banco de dados
-        const usuario = {
+          const usuario = {
             id: 1,
             nome: 'Usuário Fake',
             email: 'email@blablabla.com'
