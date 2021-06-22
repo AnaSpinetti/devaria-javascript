@@ -1,9 +1,8 @@
-const UsuarioRepository = require('../repositories/impl/MongoDBUsuarioRepository')
+const UsuarioRepository = require('../repositories/impl/MongoDBUsuarioRepository');
 
 class UsuarioService {
-    async cadastrar(dadosUsuario){
-        const erros = [];
-        
+    async cadastrar(dadosUsuario) {
+        const listaErros = [];
 
         if (!dadosUsuario.nome || !dadosUsuario.nome.toString().trim()) {            
             listaErros.push('Nome do usuário inválido');
@@ -40,26 +39,27 @@ class UsuarioService {
 
         if (!dadosUsuario.senha || !dadosUsuario.senha.trim()) {
             listaErros.push('Senha inválida');
-        } 
+        }
 
         const retorno = {
-            error: null,
+            erros: null,
             usuario: null
         };
 
-        if(erros.length){
-            retorno.erros = erros;
-        }else {
-            // Fazer o cadastro do usuário no BD
+        if (listaErros.length) {
+            retorno.erros = listaErros;
+        } else {
+            // faz o cadastro do usuario efetivamente no banco de dados
             const usuarioCadastrado = await UsuarioRepository.cadastrar({
                 nome: dadosUsuario.nome,
                 email: dadosUsuario.email,
                 senha: dadosUsuario.senha
             });
+
             retorno.usuario = usuarioCadastrado;
         }
 
-        return retorno
+        return retorno;
     }
 }
 

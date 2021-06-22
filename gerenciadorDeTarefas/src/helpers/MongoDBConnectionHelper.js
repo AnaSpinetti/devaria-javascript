@@ -1,18 +1,20 @@
-const e = require('express');
-const mongoose = require ('mongoose');
+const mongoose = require('mongoose');
 
 class MongoDBConnectionHelper {
-    static conectar(){
-        const conexao = mongoose.connect(process.env.MONGO_DB_CONEXAO, {
+    // define um método estatico que faz a conexão com o mongodb
+    // como o método é estatico eu não preciso instânciar o objeto para usar
+    static conectar() {
+        // faz efetivamente a conexão com o mongodb
+        const conexao = mongoose.connect(process.env.MONGO_DB_STRING_CONEXAO, {
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
 
-        // Verificando se a conexão foi com sucesso
-        mongoose.connection.on('connected', () => console.log("Conectado ao mongoDb"));
+        // quando a conexão for realizada com sucesso, ele vai mostrar a mensagem de sucesso
+        mongoose.connection.on('connected', () => console.log('Conectado ao mongodb'));
 
-        // Se der erro exibe a mensagem abaixo
-        mongoose.connection.on('error',  e => console.error("Erro ao conectar ao mongoDB", e.message));
+        // se der algum erro na conexão, ele vai mostrar a mensagem de erro
+        mongoose.connection.on('error', e => console.error('Erro ao conectar com o mongodb', e.message));
 
         return conexao;
     }

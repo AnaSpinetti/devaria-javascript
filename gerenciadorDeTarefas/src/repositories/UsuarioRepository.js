@@ -1,8 +1,18 @@
-// Faz a definição do repositório de usuários,os métodos que vão precisar ser implementados ao utilizar a classe
-module.exports = (Implementacao) => {
 
-    if(!Implementacao.cadastrar){
-        throw new Error ("O método cadastrar precisa ser implementado")
+// faz a definição da interface do repositorio de usuários
+// então qualquer implementação de repositorio de usuario vai precisar ter os métodos definidos aqui
+module.exports = (Implementacao) => {
+    if (!Implementacao.cadastrar) {
+        throw new Error(`A classe ${Implementacao} não implementou o método cadastrar!`);
     }
+
+    if (!Implementacao.filtrar) {
+        throw new Error(`A classe ${Implementacao} não implementou o método filtrar!`);
+    }
+
+    if (!Implementacao.buscarPorId) {
+        throw new Error(`A classe ${Implementacao} não implementou o método buscarPorId!`);
+    }
+
     return Implementacao;
 }
