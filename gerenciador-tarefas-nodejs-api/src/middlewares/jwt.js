@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
         const rotaPublicaContemWidcard = rota.url.indexOf('*') !== -1;
         const urlRrequisicaoContemParteDaRotaPublica = req.url.indexOf(rota.url.replace('*', '')) !== -1;
 
-        return ( // os parentesis definem a prioridade de verificação das condições
+        return ( // os parenteses definem a prioridade de verificação das condições
             // verifica se a rota da requisição é identica
             rota.url === req.url
             || ( // ou a rota publica contem um '*' e a rota da requisição possui como parte da url a rota publica
@@ -33,10 +33,10 @@ module.exports = (req, res, next) => {
                 && urlRrequisicaoContemParteDaRotaPublica
             )
         )
-        && rota.metodo === req.method.toUpperCase()
+        && (rota.metodo === req.method.toUpperCase())
     });
     
-    if (rotaPublica) {
+    if (rotaPublica || req.method.toUpperCase() === 'OPTIONS') {
         req.logger.info('rota publica, requisição liberada');
         return next();
     }
